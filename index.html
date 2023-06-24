@@ -1,0 +1,61 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Sun Jun 25 02:23:07 2023
+
+@author: ASUS VIVOBOOK
+"""
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Property Price Prediction</title>
+</head>
+<body>
+    <h1>Property Price Prediction</h1>
+
+    <form id="prediction-form">
+        <label for="feature1">Feature 1:</label>
+        <input type="text" id="feature1" name="feature1"><br><br>
+
+        <label for="feature2">Feature 2:</label>
+        <input type="text" id="feature2" name="feature2"><br><br>
+
+        <label for="feature3">Feature 3:</label>
+        <input type="text" id="feature3" name="feature3"><br><br>
+
+        <button type="submit">Predict Price</button>
+    </form>
+
+    <div id="prediction-result"></div>
+
+    <script>
+        // Handle form submission
+        document.getElementById("prediction-form").addEventListener("submit", function(event) {
+            event.preventDefault();
+            predictPrice();
+        });
+
+        // Perform prediction using API
+        function predictPrice() {
+            var formData = new FormData(document.getElementById("prediction-form"));
+
+            // Make a POST request to the API endpoint
+            fetch("/", {
+                method: "POST",
+                body: JSON.stringify(Object.fromEntries(formData)),
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Display the prediction result
+                document.getElementById("prediction-result").innerHTML = "Predicted Price: " + data.prediction;
+            })
+            .catch(error => {
+                console.error("Error:", error);
+            });
+        }
+    </script>
+</body>
+</html>
